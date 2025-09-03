@@ -3,14 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <title>AR Video Project</title>
+
+    <!-- A-Frame -->
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+    <!-- MindAR -->
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+
     <style>
       body, html {
         margin: 0;
+        padding: 0;
         overflow: hidden;
-        height: 100%;
         width: 100%;
+        height: 100%;
         background: black;
       }
       video {
@@ -19,28 +24,28 @@
     </style>
   </head>
   <body>
-    <!-- Сцена AR -->
+    <!-- AR-сцена -->
     <a-scene
-      mindar-image="imageTargetSrc: ./targets.mind;"
+      mindar-image="imageTargetSrc: ./targets.mind;" 
       embedded
       color-space="sRGB"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false">
 
       <a-assets>
-        <!-- Твоё видео -->
+        <!-- Видео (Cloudinary) -->
         <video
           id="video1"
+          src="https://res.cloudinary.com/dyzb3g5cv/video/upload/v1756912301/IMG_6337_compressed_gs9npt.mp4"
           autoplay
           loop
           muted
           playsinline
-          webkit-playsinline
-          src="https://res.cloudinary.com/dyzb3g5cv/video/upload/v1756912301/IMG_6337_compressed_gs9npt.mp4">
+          webkit-playsinline>
         </video>
       </a-assets>
 
-      <!-- Когда маркер найден → показывается видео -->
+      <!-- Когда найден маркер (targetIndex: 0), показать видео -->
       <a-entity mindar-image-target="targetIndex: 0">
         <a-video
           src="#video1"
@@ -54,16 +59,15 @@
     </a-scene>
 
     <script>
-      // Явный запрос разрешения камеры (особенно для iOS Safari)
+      // Явный запрос камеры, чтобы iOS/Android точно спросили разрешение
       document.addEventListener("DOMContentLoaded", () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
           navigator.mediaDevices.getUserMedia({ video: true })
             .then(stream => {
-              console.log("✅ Камера разрешена");
+              console.log("✅ Камера работает");
             })
             .catch(err => {
-              alert("❌ Камера не разрешена. Включите доступ в настройках браузера.");
-              console.error(err);
+              alert("❌ Нет доступа к камере: " + err);
             });
         }
       });
