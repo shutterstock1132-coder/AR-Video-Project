@@ -1,0 +1,36 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>AR Video Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <a-scene mindar-image="imageTargetSrc: ./target.mind;" embedded>
+      
+      <!-- Камера -->
+      <a-camera position="0 0 0" look-controls="false"></a-camera>
+      
+      <!-- Маркер (твой target.mind) -->
+      <a-entity mindar-image-target="targetIndex: 0">
+        <a-video 
+          src="#myvideo" 
+          width="1" height="0.56" 
+          position="0 0 0" 
+          autoplay="true" 
+          loop="true">
+        </a-video>
+      </a-entity>
+
+      <!-- Видео из Cloudinary -->
+      <video id="myvideo" 
+             src="https://res.cloudinary.com/dyzb3g5cv/video/upload/v1756912301/IMG_6337_compressed_gs9npt.mp4" 
+             preload="auto" 
+             playsinline 
+             webkit-playsinline 
+             autoplay 
+             loop>
+      </video>
+    </a-scene>
+  </body>
+</html>
