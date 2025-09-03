@@ -1,36 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8">
-    <title>My WebAR</title>
+    <title>WebAR Video Test</title>
     <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
       body, html { margin:0; overflow:hidden; height:100%; width:100%; background:black; }
       video { display:none; }
     </style>
   </head>
   <body>
-    <a-scene mindar-image="imageTargetSrc: ./targets.mind;" embedded color-space="sRGB" vr-mode-ui="enabled: false" device-orientation-permission-ui="enabled: false">
-      <a-assets>
-        <video id="video1" src="https://res.cloudinary.com/dyzb3g5cv/video/upload/v1756912301/IMG_6337_compressed_gs9npt.mp4" autoplay loop muted playsinline webkit-playsinline></video>
-      </a-assets>
-
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-video src="#video1" width="1" height="0.6" position="0 0 0"></a-video>
-      </a-entity>
-
-      <a-camera position="0 0 0"></a-camera>
+    <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;">
+      <a-marker preset="hiro">
+        <a-video src="https://res.cloudinary.com/dyzb3g5cv/video/upload/v1756912301/IMG_6337_compressed_gs9npt.mp4"
+                 width="1" height="0.6" autoplay loop muted></a-video>
+      </a-marker>
+      <a-entity camera></a-entity>
     </a-scene>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-          navigator.mediaDevices.getUserMedia({ video: true })
-            .then(stream => { console.log("✅ Камера работает"); })
-            .catch(err => { alert("❌ Нет доступа к камере: " + err); });
-        }
-      });
-    </script>
   </body>
 </html>
